@@ -1,9 +1,11 @@
 #!/bin/bash
 
+echo "Failed Attempts | IP Address"
+echo 
 
-grep "authentication failure" ../logs/auth.log
-
-echo
-echo "Total Failed Login Attempts:"
-
-grep -c "authentication failure" ../logs/auth.log
+grep "authentication failure" ../logs/auth.log |
+awk -F'rhost=' '{print $2}' |
+awk '{print $1}' |
+sort |
+uniq -c |
+sort -nr
